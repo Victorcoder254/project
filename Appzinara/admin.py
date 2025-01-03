@@ -10,4 +10,9 @@ class VisitorAdmin(admin.ModelAdmin):
     list_display = ("visit_date", "location")
 
 
-admin.site.register(Visitor, VisitorAdmin)    
+admin.site.register(Visitor, VisitorAdmin)
+
+class PricingAdmin(admin.ModelAdmin):
+    list_display = ("title", "price", "date")
+
+admin.site.register(Pricing, PricingAdmin)    

@@ -6,9 +6,11 @@ def home(request):
       
       # Get Contact Info
       contact_info = Contact_Info.objects.first()
+      Pricing_info = Pricing.objects.all()
 
       context = {
-            'contact_info': contact_info
+            'contact_info': contact_info,
+            'Pricing_info': Pricing_info
       }
       return render(request, 'files/index.html', context)
 
