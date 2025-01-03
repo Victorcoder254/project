@@ -24,9 +24,15 @@ admin.site.register(Business, BusinessAdmin)
 
 
 class Operating_HoursAdmin(admin.ModelAdmin):
-    list_display = ("business", "is_closed")
+    list_display = ("business",)
 
 admin.site.register(OperatingHours, Operating_HoursAdmin)
+
+
+class ServicesAdmin(admin.ModelAdmin):
+    list_display = ("business",)
+
+admin.site.register(Service, ServicesAdmin)
 
 
 class Appointment_Page_Theme_Admin(admin.ModelAdmin):

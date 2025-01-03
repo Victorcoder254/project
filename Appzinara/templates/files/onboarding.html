@@ -1,228 +1,167 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Multi-step form template">
-  <title>Multi-Step Form</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-  <style>
-    body {
-      font-family: "Inter", sans-serif;
-      background-color: #f9f9f9;
-      padding: 20px;
-    }
-
-    .form-wrapper {
-      max-width: 800px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-    }
-
-    .step-indicator {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .step-indicator .step {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 500;
-      font-size: 16px;
-      color: #536387;
-    }
-
-    .step-indicator .step.active span {
-      background: #6A64F1;
-      color: white;
-    }
-
-    .step span {
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: #DDE3EC;
-    }
-
-    .form-step {
-      display: none;
-    }
-
-    .form-step.active {
-      display: block;
-    }
-
-    .btn-wrapper {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-
-    .form-label {
-      font-weight: 500;
-      margin-bottom: 5px;
-    }
-
-    .form-input {
-      margin-bottom: 15px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form</title>
+    <!-- Link to external CSS for styling -->
+    <!-- Add Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'files/css/style.css' %}">
 </head>
-
 <body>
-  <div class="form-wrapper">
-    <div class="step-indicator">
-      <div class="step step-1 active">
-        <span>1</span>
-        Business Details
-      </div>
-      <div class="step step-2">
-        <span>2</span>
-        Operating Hours
-      </div>
-      <div class="step step-3">
-        <span>3</span>
-        Appointment Page Theme
-      </div>
-      <div class="step step-4">
-        <span>4</span>
-        Confirmation
-      </div>
+
+    <div class="container mt-5">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-8">
+                <form id="regForm">
+                    <h1 id="register">Onboarding</h1>
+                    <div class="all-steps" id="all-steps"> 
+                      <span class="step"><i class="fa fa-industry"></i></span> 
+                      <span class="step"><i class="fa fa-clock"></i></span> <!-- Weekday Operating Hours -->
+                      <span class="step"><i class="fa fa-calendar-week"></i></span> <!-- Weekend Operating Hours -->
+                      <span class="step"><i class="fa fa-flag"></i></span> <!-- Public Holiday Operating Hours -->
+                      
+                      <span class="step"><i class="fa fa-spotify"></i></span>
+                      <span class="step"><i class="fa fa-mobile-phone"></i></span>
+                    </div>
+
+                    <div class="tab">
+                      <h6>Business Details</h6>
+                    
+                      <div class="form-group">
+                        <label for="name">Business Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your business name..." required>
+                      </div>
+                    
+                      <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your business email (optional)" required>
+                      </div>
+                    
+                      <div class="form-group">
+                        <label for="phone_number">Phone Number:</label>
+                        <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="Enter your phone number" required>
+                      </div>
+                    
+                      <div class="form-group">
+                        <label for="whatsapp_number">WhatsApp Number:</label>
+                        <input type="tel" class="form-control" id="whatsapp_number" name="whatsapp_number" placeholder="Enter your WhatsApp number (optional)" required>
+                      </div>
+                    
+                      <div class="form-group">
+                        <label for="country">Country:</label>
+                        <input type="text" class="form-control" id="country" name="country" placeholder="Enter your country" required>
+                      </div>
+                    
+                      <div class="form-group">
+                        <label for="location">Location:</label>
+                        <input type="text" class="form-control" id="location" name="location" placeholder="Enter your business location" required>
+                      </div>
+                    
+                      <div class="form-group">
+                        <label for="type_of_business">Type of Business:</label>
+                        <input type="text" class="form-control" id="type_of_business" name="type_of_business" placeholder="Enter the type of business" required>
+                      </div>
+                    
+                      <div class="form-group">
+                        <label for="description">Business Description:</label>
+                        <textarea class="form-control" id="description" name="description" placeholder="Enter a brief description of your business" rows="4" required></textarea>
+                      </div>
+                    </div>
+
+
+
+                    <div class="tab">
+                      <h6>Weekday Operating Hours</h6>
+                      <div class="form-group">
+                        <label for="weekday_opening_time">Opening Time:</label>
+                        <input type="time" class="form-control" id="weekday_opening_time" name="weekday_opening_time" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="weekday_closing_time">Closing Time:</label>
+                        <input type="time" class="form-control" id="weekday_closing_time" name="weekday_closing_time" required>
+                      </div>
+                    </div>
+                    
+                    <div class="tab">
+                      <h6>Weekend Operating Hours</h6>
+                      <div class="form-group">
+                        <label for="operates_weekends">Do you operate on weekends?</label>
+                        <select class="form-control" id="operates_weekends" name="operates_weekends" required>
+                          <option value="true">Yes</option>
+                          <option value="false">No</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="saturday_opening_time">Saturday Opening Time (if applicable):</label>
+                        <input type="time" class="form-control" id="saturday_opening_time" name="saturday_opening_time">
+                      </div>
+                      <div class="form-group">
+                        <label for="saturday_closing_time">Saturday Closing Time (if applicable):</label>
+                        <input type="time" class="form-control" id="saturday_closing_time" name="saturday_closing_time">
+                      </div>
+                      <div class="form-group">
+                        <label for="sunday_opening_time">Sunday Opening Time (if applicable):</label>
+                        <input type="time" class="form-control" id="sunday_opening_time" name="sunday_opening_time">
+                      </div>
+                      <div class="form-group">
+                        <label for="sunday_closing_time">Sunday Closing Time (if applicable):</label>
+                        <input type="time" class="form-control" id="sunday_closing_time" name="sunday_closing_time">
+                      </div>
+                    </div>
+                    
+                    <div class="tab">
+                      <h6>Public Holiday Operating Hours</h6>
+                      <div class="form-group">
+                        <label for="operates_public_holidays">Do you operate on public holidays?</label>
+                        <select class="form-control" id="operates_public_holidays" name="operates_public_holidays" required>
+                          <option value="true">Yes</option>
+                          <option value="false">No</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="public_holiday_opening_time">Opening Time (if applicable):</label>
+                        <input type="time" class="form-control" id="public_holiday_opening_time" name="public_holiday_opening_time" not-required>
+                      </div>
+                      <div class="form-group">
+                        <label for="public_holiday_closing_time">Closing Time (if applicable):</label>
+                        <input type="time" class="form-control" id="public_holiday_closing_time" name="public_holiday_closing_time" not-required>
+                      </div>
+                    </div>
+                    
+
+                    <div class="tab">
+                        <h6>What's your Favourite Song?</h6>
+                        <p><input placeholder="Favourite Song" oninput="this.className = ''" name="uname"></p>
+                    </div>
+
+                    <div class="tab">
+                        <h6>What's your Favourite Mobile brand?</h6>
+                        <p><input placeholder="Favourite Mobile Brand" oninput="this.className = ''" name="uname"></p>
+                    </div>
+                    <div class="thanks-message text-center" id="text-message"> 
+                        <img src="https://i.imgur.com/O18mJ1K.png" width="100" class="mb-4">
+                        <h3>Thank you for your feedback!</h3>
+                        <span>Thanks for your valuable information. It helps us to improve our services!</span>
+                    </div>
+                    <div style="overflow:auto;" id="nextprevious">
+                        <div style="float:right;">
+                          <button type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-angle-double-left"></i></button> 
+                          <button type="button" id="nextBtn" onclick="nextPrev(1)"><i class="fa fa-angle-double-right"></i></button> 
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <form id="multiStepForm">
-      <!-- Step 1: Business Details -->
-      <div class="form-step step-1 active">
-        <div class="form-input">
-          <label for="businessName" class="form-label">Business Name</label>
-          <input type="text" id="businessName" name="businessName" class="form-control">
-        </div>
-        <div class="form-input">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" id="email" name="email" class="form-control">
-        </div>
-        <div class="form-input">
-          <label for="phone" class="form-label">Phone Number</label>
-          <input type="tel" id="phone" name="phone" class="form-control">
-        </div>
-        <div class="form-input">
-          <label for="whatsapp" class="form-label">WhatsApp Number</label>
-          <input type="tel" id="whatsapp" name="whatsapp" class="form-control">
-        </div>
-        <div class="form-input">
-          <label for="country" class="form-label">Country</label>
-          <input type="text" id="country" name="country" class="form-control">
-        </div>
-        <div class="form-input">
-          <label for="location" class="form-label">Location</label>
-          <input type="text" id="location" name="location" class="form-control">
-        </div>
-        <div class="form-input">
-          <label for="website" class="form-label">Website</label>
-          <input type="url" id="website" name="website" class="form-control">
-        </div>
-        <div class="form-input">
-          <label for="description" class="form-label">Description</label>
-          <textarea id="description" name="description" rows="4" class="form-control"></textarea>
-        </div>
-      </div>
-
-      <!-- Step 2: Operating Hours -->
-      <div class="form-step step-2">
-        <div class="form-input">
-          <label for="day" class="form-label">Day of the Week</label>
-          <select id="day" name="day" class="form-control">
-            <option value="Monday">Monday</option>
-            <option value="Tuesday">Tuesday</option>
-            <option value="Wednesday">Wednesday</option>
-            <option value="Thursday">Thursday</option>
-            <option value="Friday">Friday</option>
-            <option value="Saturday">Saturday</option>
-            <option value="Sunday">Sunday</option>
-          </select>
-        </div>
-        <div class="form-input">
-          <label for="openingTime" class="form-label">Opening Time</label>
-          <input type="time" id="openingTime" name="openingTime" class="form-control">
-        </div>
-        <div class="form-input">
-          <label for="closingTime" class="form-label">Closing Time</label>
-          <input type="time" id="closingTime" name="closingTime" class="form-control">
-        </div>
-        <div class="form-input">
-          <label for="isClosed" class="form-label">Closed</label>
-          <input type="checkbox" id="isClosed" name="isClosed">
-        </div>
-      </div>
-
-      <!-- Step 3: Appointment Page Theme -->
-      <div class="form-step step-3">
-        <div class="form-input">
-          <label for="themeSettings" class="form-label">Theme Settings (JSON)</label>
-          <textarea id="themeSettings" name="themeSettings" rows="4" class="form-control"></textarea>
-        </div>
-        <div class="form-input">
-          <label for="previewUrl" class="form-label">Preview URL</label>
-          <input type="url" id="previewUrl" name="previewUrl" class="form-control">
-        </div>
-      </div>
-
-      <!-- Step 4: Confirmation -->
-      <div class="form-step step-4">
-        <p>Please review your details before submission.</p>
-      </div>
-
-      <div class="btn-wrapper">
-        <button type="button" class="btn btn-secondary" id="prevStep" disabled>Back</button>
-        <button type="button" class="btn btn-primary" id="nextStep">Next</button>
-      </div>
-    </form>
-  </div>
-
-  <script>
-    const steps = Array.from(document.querySelectorAll('.form-step'));
-    const nextBtn = document.getElementById('nextStep');
-    const prevBtn = document.getElementById('prevStep');
-    let currentStep = 0;
-
-    function updateStep() {
-      steps.forEach((step, index) => {
-        step.classList.toggle('active', index === currentStep);
-      });
-
-      prevBtn.disabled = currentStep === 0;
-      nextBtn.textContent = currentStep === steps.length - 1 ? 'Submit' : 'Next';
-    }
-
-    nextBtn.addEventListener('click', () => {
-      if (currentStep < steps.length - 1) {
-        currentStep++;
-        updateStep();
-      } else {
-        document.getElementById('multiStepForm').submit();
-      }
-    });
-
-    prevBtn.addEventListener('click', () => {
-      if (currentStep > 0) {
-        currentStep--;
-        updateStep();
-      }
-    });
-
-    updateStep();
-  </script>
 </body>
 
+
+    <!-- Link to external JS for functionality -->
+    <script src="{% static 'files/js/scripts.js' %}" defer></script>
 </html>
