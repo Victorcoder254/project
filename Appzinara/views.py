@@ -14,3 +14,6 @@ def home(request):
       }
       return render(request, 'files/index.html', context)
 
+
+def onboarding(request):
+      return render(request, 'files/onboarding.html')
