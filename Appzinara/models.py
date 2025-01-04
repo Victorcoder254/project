@@ -42,7 +42,7 @@ class Pricing(models.Model):
 # This model will be used to store the business details
 
 class Business(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    #Remember to add the user reference field to the model
     name = models.CharField(max_length=255)
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
