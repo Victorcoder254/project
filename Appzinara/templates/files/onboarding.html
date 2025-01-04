@@ -24,9 +24,8 @@
                       <span class="step"><i class="fa fa-clock"></i></span> <!-- Weekday Operating Hours -->
                       <span class="step"><i class="fa fa-calendar-week"></i></span> <!-- Weekend Operating Hours -->
                       <span class="step"><i class="fa fa-flag"></i></span> <!-- Public Holiday Operating Hours -->
-                      
-                      <span class="step"><i class="fa fa-spotify"></i></span>
-                      <span class="step"><i class="fa fa-mobile-phone"></i></span>
+                      <span class="step"><i class="fa fa-list"></i></span>
+                      <span class="step"><i class="fa fa-user-shield"></i></span>
                     </div>
 
                     <div class="tab">
@@ -132,22 +131,78 @@
                         <input type="time" class="form-control" id="public_holiday_closing_time" name="public_holiday_closing_time" not-required>
                       </div>
                     </div>
+
+                    <div class="tab">
+                      <h6>Service Details</h6>
+                      <div id="services-container">
+                        <!-- First Service -->
+                        <div class="service-item border p-3 mb-3">
+                          <div class="form-group">
+                            <label for="service_name_1">Service Name:</label>
+                            <input type="text" class="form-control" id="service_name_1" name="service_name[]" placeholder="Enter service name">
+                          </div>
+                          <div class="form-group">
+                            <label for="service_description_1">Description:</label>
+                            <textarea class="form-control" id="service_description_1" name="service_description[]" rows="2" placeholder="Enter service description"></textarea>
+                          </div>
+                          <div class="form-group">
+                            <label for="service_duration_1">Duration (HH:MM):</label>
+                            <input type="time" class="form-control" id="service_duration_1" name="service_duration[]">
+                          </div>
+                          <div class="form-group">
+                            <label for="service_price_1">Fee (Optional):</label>
+                            <input type="number" step="0.01" class="form-control" id="service_price_1" name="service_price[]" placeholder="Enter price">
+                          </div>
+                        </div>
+                      </div>
+                      <button type="button" class="btn btn-primary" id="add-service-button">Add Service</button>
+                    </div>
                     
-
                     <div class="tab">
-                        <h6>What's your Favourite Song?</h6>
-                        <p><input placeholder="Favourite Song" oninput="this.className = ''" name="uname"></p>
+                      <h6>Admin User Details</h6>
+                      <p>Please fill in the details below to create an admin user for managing the business dashboard.</p>
+                    
+                      <div class="form-group mb-3">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter first name" oninput="this.className = 'form-control'" required>
+                      </div>
+                    
+                      <div class="form-group mb-3">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter last name" oninput="this.className = 'form-control'" required>
+                      </div>
+                    
+                      <div class="form-group mb-3">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" oninput="this.className = 'form-control'" required>
+                      </div>
+                    
+                      <div class="form-group mb-3">
+                        <label for="confirm_password">Confirm Password:</label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Re-enter password" oninput="this.className = 'form-control'" required>
+                        <small id="password_feedback" class="form-text text-muted"></small>
+                      </div>
                     </div>
-
-                    <div class="tab">
-                        <h6>What's your Favourite Mobile brand?</h6>
-                        <p><input placeholder="Favourite Mobile Brand" oninput="this.className = ''" name="uname"></p>
+                    
+                    <div class="tab text-center" id="final-tab">
+                      <!-- Initially visible: Rectangular Submit Button with Curved Edges -->
+                      <button 
+                        id="submitButton" 
+                        class="btn btn-lg" 
+                        style="background: linear-gradient(90deg, #007bff, #00c853); border-radius: 15px; color: white; padding: 10px 20px; font-size: 18px;"
+                        onclick="showThankYouMessage()">
+                        Submit
+                      </button>
+                    
+                      <!-- Hidden Thank You Message -->
+                      <div id="thankYouMessage" style="display: none;">
+                        <img src="{% static 'files/assets/success.png' %}" width="100" class="mb-4">
+                        <h3>Congratulations!</h3>
+                        <p>Your details have been submitted successfully. We're thrilled to have you onboard and can't wait to see how we can support your journey!</p>
+                      </div>
                     </div>
-                    <div class="thanks-message text-center" id="text-message"> 
-                        <img src="https://i.imgur.com/O18mJ1K.png" width="100" class="mb-4">
-                        <h3>Thank you for your feedback!</h3>
-                        <span>Thanks for your valuable information. It helps us to improve our services!</span>
-                    </div>
+                    
+                    
                     <div style="overflow:auto;" id="nextprevious">
                         <div style="float:right;">
                           <button type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-angle-double-left"></i></button> 
@@ -164,4 +219,84 @@
 
     <!-- Link to external JS for functionality -->
     <script src="{% static 'files/js/scripts.js' %}" defer></script>
+
+    <script>
+      
+
+
+               
+      document.getElementById("add-service-button").addEventListener("click", function () {
+                const container = document.getElementById("services-container");
+                const serviceCount = container.children.length + 1;
+              
+                const serviceHTML = `
+                  <div class="service-item border p-3 mb-3">
+                    <div class="form-group">
+                      <label for="service_name_${serviceCount}">Service Name:</label>
+                      <input type="text" class="form-control" id="service_name_${serviceCount}" name="service_name[]" placeholder="Enter service name">
+                    </div>
+                    <div class="form-group">
+                      <label for="service_description_${serviceCount}">Description:</label>
+                      <textarea class="form-control" id="service_description_${serviceCount}" name="service_description[]" rows="2" placeholder="Enter service description"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="service_duration_${serviceCount}">Duration (HH:MM):</label>
+                      <input type="time" class="form-control" id="service_duration_${serviceCount}" name="service_duration[]">
+                    </div>
+                    <div class="form-group">
+                      <label for="service_price_${serviceCount}">Price (Optional):</label>
+                      <input type="number" step="0.01" class="form-control" id="service_price_${serviceCount}" name="service_price[]" placeholder="Enter price">
+                    </div>
+                  </div>
+                `;
+              
+                container.insertAdjacentHTML("beforeend", serviceHTML);
+              });
+              
+              // Wait for the DOM to load
+              document.addEventListener("DOMContentLoaded", function () {
+                const passwordField = document.getElementById("password");
+                const confirmPasswordField = document.getElementById("confirm_password");
+                const feedbackMessage = document.createElement("small");
+                feedbackMessage.classList.add("form-text", "text-muted");
+                feedbackMessage.style.color = "red";
+                confirmPasswordField.parentNode.appendChild(feedbackMessage);
+
+                // Function to check if passwords match
+                function checkPasswords() {
+                  const password = passwordField.value;
+                  const confirmPassword = confirmPasswordField.value;
+
+                  if (confirmPassword.length === 0) {
+                    feedbackMessage.textContent = "";
+                  } else if (password !== confirmPassword) {
+                    feedbackMessage.textContent = "Passwords do not match.";
+                  } else {
+                    feedbackMessage.textContent = "Passwords match!";
+                    feedbackMessage.style.color = "green";
+                  }
+                }
+
+                // Add event listeners for real-time validation
+                passwordField.addEventListener("input", checkPasswords);
+                confirmPasswordField.addEventListener("input", checkPasswords);
+              });
+
+              // Function to display the thank-you message when the submit button is clicked
+              function showThankYouMessage() {
+              const submitButton = document.getElementById("submitButton");
+              const thankYouMessage = document.getElementById("thankYouMessage");
+
+              // Hide the submit button and display the thank-you message
+              submitButton.style.display = "none";
+              thankYouMessage.style.display = "block";
+
+              // Prevent the document from reloading by disabling form submission behavior
+              if (event) {
+                event.preventDefault();
+              }
+            }
+
+
+    </script>
 </html>

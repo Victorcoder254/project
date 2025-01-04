@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django_countries.fields import CountryField
-from django.db.models import JSONField
+from django.contrib.auth.models import User
 
 
 class Visitor(models.Model):
@@ -42,6 +42,7 @@ class Pricing(models.Model):
 # This model will be used to store the business details
 
 class Business(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
@@ -58,7 +59,7 @@ class Business(models.Model):
 
 #Business operating hours
 class OperatingHours(models.Model):
-    business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name="operating_hours")
+    business = models.OneToOneField(Business, on_delete=models.CASCADE, related_name="operating_hours")
 
     # Weekday hours
     weekday_opening_time = models.TimeField()
@@ -89,7 +90,7 @@ class OperatingHours(models.Model):
 #Business services
  
 class Service(models.Model):
-    business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name="services")
+    business = models.OneToOneField(Business, on_delete=models.CASCADE, related_name="services")
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     duration = models.DurationField(help_text="Duration of the service (e.g., 00:30:00 for 30 minutes)")
@@ -100,15 +101,3 @@ class Service(models.Model):
 
 
 
-#Business appointment Page Theme
-# This model will be used to set the theme of the appointment page
-
-
-class AppointmentPageTheme(models.Model):
-    business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name="themes")
-    theme_settings = JSONField(blank=True, null=True)
-    preview_url = models.URLField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.business.name} - Theme"

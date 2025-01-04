@@ -34,9 +34,3 @@ class ServicesAdmin(admin.ModelAdmin):
 
 admin.site.register(Service, ServicesAdmin)
 
-
-class Appointment_Page_Theme_Admin(admin.ModelAdmin):
-    list_display = ("business",)
-
-
-admin.site.register(AppointmentPageTheme, Appointment_Page_Theme_Admin)    
