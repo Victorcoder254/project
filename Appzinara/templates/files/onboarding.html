@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Survey Form</title>
+    <title>Zinara - Onboarding</title>
     <!-- Link to external CSS for styling -->
     <!-- Add Bootstrap CSS for styling -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -17,7 +17,8 @@
     <div class="container mt-5">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-8">
-                <form id="regForm">
+                <form id="regForm" method="post">
+                    {% csrf_token %}
                     <h1 id="register">Onboarding</h1>
                     <div class="all-steps" id="all-steps"> 
                       <span class="step"><i class="fa fa-industry"></i></span> 
@@ -73,7 +74,6 @@
                     </div>
 
 
-
                     <div class="tab">
                       <h6>Weekday Operating Hours</h6>
                       <div class="form-group">
@@ -84,13 +84,18 @@
                         <label for="weekday_closing_time">Closing Time:</label>
                         <input type="time" class="form-control" id="weekday_closing_time" name="weekday_closing_time" required>
                       </div>
+                      <div class="form-group">
+                        <label for="max_appointments">Maximum Appointments Per Day:</label>
+                        <input type="number" class="form-control" id="max_appointments" name="max_appointments" min="1" required placeholder="Enter the maximum number of appointments" value="10">
+                      </div>
                     </div>
                     
+
                     <div class="tab">
                       <h6>Weekend Operating Hours</h6>
                       <div class="form-group">
                         <label for="operates_weekends">Do you operate on weekends?</label>
-                        <select class="form-control" id="operates_weekends" name="operates_weekends" required>
+                        <select class="form-control" id="operates_weekends" name="operates_weekends" required onchange="toggleWeekendHours()">
                           <option value="true">Yes</option>
                           <option value="false">No</option>
                         </select>
@@ -104,12 +109,12 @@
                         <input type="time" class="form-control" id="saturday_closing_time" name="saturday_closing_time">
                       </div>
                       <div class="form-group">
-                        <label for="sunday_opening_time">Sunday Opening Time (if applicable):</label>
-                        <input type="time" class="form-control" id="sunday_opening_time" name="sunday_opening_time">
+                        <label for="sunday_opening_time">Sunday Opening Time (Enter Time as 00:00 If Not Applicable):</label>
+                        <input type="time" class="form-control" id="sunday_opening_time" name="sunday_opening_time" placeholder="Enter 00:00 If Not Applicable">
                       </div>
                       <div class="form-group">
-                        <label for="sunday_closing_time">Sunday Closing Time (if applicable):</label>
-                        <input type="time" class="form-control" id="sunday_closing_time" name="sunday_closing_time">
+                        <label for="sunday_closing_time">Sunday Closing Time (Enter Time as 00:00 If Not Applicable):</label>
+                        <input type="time" class="form-control" id="sunday_closing_time" name="sunday_closing_time" placeholder="Enter 00:00 If Not Applicable">
                       </div>
                     </div>
                     
@@ -117,20 +122,21 @@
                       <h6>Public Holiday Operating Hours</h6>
                       <div class="form-group">
                         <label for="operates_public_holidays">Do you operate on public holidays?</label>
-                        <select class="form-control" id="operates_public_holidays" name="operates_public_holidays" required>
+                        <select class="form-control" id="operates_public_holidays" name="operates_public_holidays" required onchange="toggleHolidayHours()">
                           <option value="true">Yes</option>
                           <option value="false">No</option>
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="public_holiday_opening_time">Opening Time (if applicable):</label>
-                        <input type="time" class="form-control" id="public_holiday_opening_time" name="public_holiday_opening_time" not-required>
+                        <label for="public_holiday_opening_time">Opening Time (if 'NO' leave as it is!!):</label>
+                        <input type="time" class="form-control" id="public_holiday_opening_time" name="public_holiday_opening_time">
                       </div>
                       <div class="form-group">
-                        <label for="public_holiday_closing_time">Closing Time (if applicable):</label>
-                        <input type="time" class="form-control" id="public_holiday_closing_time" name="public_holiday_closing_time" not-required>
+                        <label for="public_holiday_closing_time">Closing Time (if 'NO' leave as it is!!):</label>
+                        <input type="time" class="form-control" id="public_holiday_closing_time" name="public_holiday_closing_time">
                       </div>
                     </div>
+                    
 
                     <div class="tab">
                       <h6>Service Details</h6>
@@ -146,8 +152,27 @@
                             <textarea class="form-control" id="service_description_1" name="service_description[]" rows="2" placeholder="Enter service description"></textarea>
                           </div>
                           <div class="form-group">
-                            <label for="service_duration_1">Duration (HH:MM):</label>
-                            <input type="time" class="form-control" id="service_duration_1" name="service_duration[]">
+                            <label for="service_duration_1">Duration:</label>
+                            <div class="d-flex">
+                              <input
+                                type="number"
+                                class="form-control me-2"
+                                id="service_duration_hours_1"
+                                name="service_duration_hours[]"
+                                placeholder="Hours"
+                                min="0"
+                                max="23"
+                              >
+                              <input
+                                type="number"
+                                class="form-control"
+                                id="service_duration_minutes_1"
+                                name="service_duration_minutes[]"
+                                placeholder="Minutes"
+                                min="0"
+                                max="59"
+                              >
+                            </div>
                           </div>
                           <div class="form-group">
                             <label for="service_price_1">Fee (Optional):</label>
@@ -239,10 +264,30 @@
                       <label for="service_description_${serviceCount}">Description:</label>
                       <textarea class="form-control" id="service_description_${serviceCount}" name="service_description[]" rows="2" placeholder="Enter service description"></textarea>
                     </div>
-                    <div class="form-group">
-                      <label for="service_duration_${serviceCount}">Duration (HH:MM):</label>
-                      <input type="time" class="form-control" id="service_duration_${serviceCount}" name="service_duration[]">
-                    </div>
+                    
+                          <div class="form-group">
+                            <label for="service_duration_1">Duration:</label>
+                            <div class="d-flex">
+                              <input
+                                type="number"
+                                class="form-control me-2"
+                                id="service_duration_hours_1"
+                                name="service_duration_hours[]"
+                                placeholder="Hours"
+                                min="0"
+                                max="23"
+                              >
+                              <input
+                                type="number"
+                                class="form-control"
+                                id="service_duration_minutes_1"
+                                name="service_duration_minutes[]"
+                                placeholder="Minutes"
+                                min="0"
+                                max="59"
+                              >
+                            </div>
+                          </div>
                     <div class="form-group">
                       <label for="service_price_${serviceCount}">Price (Optional):</label>
                       <input type="number" step="0.01" class="form-control" id="service_price_${serviceCount}" name="service_price[]" placeholder="Enter price">
@@ -291,11 +336,54 @@
               submitButton.style.display = "none";
               thankYouMessage.style.display = "block";
 
-              // Prevent the document from reloading by disabling form submission behavior
-              if (event) {
-                event.preventDefault();
+            }
+
+            function toggleWeekendHours() {
+              const operatesWeekends = document.getElementById("operates_weekends").value;
+              const saturdayOpening = document.getElementById("saturday_opening_time");
+              const saturdayClosing = document.getElementById("saturday_closing_time");
+              const sundayOpening = document.getElementById("sunday_opening_time");
+              const sundayClosing = document.getElementById("sunday_closing_time");
+
+              if (operatesWeekends === "false") {
+                saturdayOpening.value = "00:00";
+                saturdayClosing.value = "00:00";
+                sundayOpening.value = "00:00";
+                sundayClosing.value = "00:00";
+                saturdayOpening.disabled = true;
+                saturdayClosing.disabled = true;
+                sundayOpening.disabled = true;
+                sundayClosing.disabled = true;
+              } else {
+                saturdayOpening.value = "";
+                saturdayClosing.value = "";
+                sundayOpening.value = "";
+                sundayClosing.value = "";
+                saturdayOpening.disabled = false;
+                saturdayClosing.disabled = false;
+                sundayOpening.disabled = false;
+                sundayClosing.disabled = false;
               }
             }
+
+            function toggleHolidayHours() {
+              const operatesHolidays = document.getElementById("operates_public_holidays").value;
+              const holidayOpening = document.getElementById("public_holiday_opening_time");
+              const holidayClosing = document.getElementById("public_holiday_closing_time");
+
+              if (operatesHolidays === "false") {
+                holidayOpening.value = "00:00";
+                holidayClosing.value = "00:00";
+                holidayOpening.disabled = true;
+                holidayClosing.disabled = true;
+              } else {
+                holidayOpening.value = "";
+                holidayClosing.value = "";
+                holidayOpening.disabled = false;
+                holidayClosing.disabled = false;
+              }
+            }
+
 
 
     </script>

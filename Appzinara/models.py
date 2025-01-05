@@ -38,28 +38,38 @@ class Pricing(models.Model):
         return f"{self.title} - {self.price} - {self.date}"        
     
 
+#ONBOARDING MODELS
+#
+#
+#
+############################################################################################################
+
+
 #Business details
 # This model will be used to store the business details
 
 class Business(models.Model):
     #Remember to add the user reference field to the model
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="business",blank=True, null=True) 
     name = models.CharField(max_length=255)
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     whatsapp_number = models.CharField(max_length=15, blank=True, null=True)
-    country = CountryField(blank=True, null=True)
+    country = models.CharField(max_length=255, blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True)
     type_of_business = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} - {self.location}"
+        return f"{self.user.username} - {self.name} - {self.location}"
  
 
 #Business operating hours
 class OperatingHours(models.Model):
     business = models.OneToOneField(Business, on_delete=models.CASCADE, related_name="operating_hours")
+
+    max_appointments_per_day = models.PositiveIntegerField(default=1)
 
     # Weekday hours
     weekday_opening_time = models.TimeField()
@@ -90,7 +100,7 @@ class OperatingHours(models.Model):
 #Business services
  
 class Service(models.Model):
-    business = models.OneToOneField(Business, on_delete=models.CASCADE, related_name="services")
+    business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name="services")
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     duration = models.DurationField(help_text="Duration of the service (e.g., 00:30:00 for 30 minutes)")
@@ -101,3 +111,4 @@ class Service(models.Model):
 
 
 
+#END OF ONBOARDING MODELS ############################################################################################################
