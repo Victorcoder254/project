@@ -154,3 +154,67 @@ def onboarding(request):
     return render(request, "files/onboarding.html")
 
 
+def start(request, pk):
+    business = Business.objects.get(pk=pk)
+    context = {
+        "business": business,
+    }
+    return render(request, "files/start.html", context)
+
+
+def choose_appointment(request, pk):
+    business = Business.objects.get(pk=pk)
+    services = Service.objects.filter(business=business)  # Fetch all services for this business
+    context = {
+        "business": business,
+        "services": services,
+    }
+    return render(request, "files/choose_appoinment.html", context)    
+
+
+def choose_appointment_date(request, business_pk, service_pk):
+    business = Business.objects.get(pk=business_pk)
+    service = Service.objects.get(pk=service_pk)  # Get the specific service
+    context = {
+        "business": business,
+        "service": service,  # Pass the selected service
+    }
+    return render(request, "files/choose_appointment_date.html", context)
+
+
+
+def our_first_availability(request, business_pk, service_pk): # Get the first available date
+    business = Business.objects.get(pk=business_pk)
+    service = Service.objects.get(pk=service_pk)  # Get the specific service
+    context = {
+        "business": business,
+        "service": service,  # Pass the selected service
+    }
+    return render(request, "files/our_first_availability.html", context)
+
+
+
+def lets_schedule(request, business_pk, service_pk):# book appointment
+    business = Business.objects.get(pk=business_pk)
+    service = Service.objects.get(pk=service_pk)  # Get the specific service
+    context = {
+        "business": business,
+        "service": service,  # Pass the selected service
+    }
+    return render(request, "files/lets_schedule.html", context)
+
+
+
+def confirmation(request): # confirmation page
+    return render(request, "files/confirmation.html")
+
+
+
+
+def other_options(request): # get another appointment date
+    return render(request, "files/other_options.html")
+
+
+    
+
+   

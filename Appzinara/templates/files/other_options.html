@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Dental Bar - Calendar Comparison</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f5f5f5; /* Light grey background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Container */
+    .container {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      max-width: 800px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* Left Section */
+    .left-section {
+      background-color: #c3a682; /* Beige tone */
+      color: white;
+      padding: 20px;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .left-section h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .left-section p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .calendar {
+      text-align: center;
+    }
+
+    .calendar h3 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .calendar table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+    }
+
+    .calendar th,
+    .calendar td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #e0e0e0;
+    }
+
+    .calendar th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+      color: #4d3524;
+    }
+
+    .calendar td {
+      background-color: #fff;
+      color: #4d3524;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .calendar td:hover {
+      background-color: #f0f0f0;
+    }
+
+    .calendar .selected {
+      background-color: #c3a682; /* Beige for selected date */
+      color: white;
+    }
+
+    .calendar .time {
+      font-size: 16px;
+      color: white;
+      margin-bottom: 0;
+    }
+
+    /* Right Section */
+    .right-section {
+      background-color: #fff;
+      padding: 20px;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .right-section h2 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #4d3524;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .right-section p {
+      font-size: 16px;
+      color: gray;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* Buttons */
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .buttons button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .buttons button.primary {
+      background-color: #c3a682; /* Beige button */
+      color: white;
+    }
+
+    .buttons button.primary:hover {
+      background-color: #b2946e; /* Darker beige on hover */
+    }
+
+    .buttons button.secondary {
+      background-color: #f5f5f5; /* Grey button */
+      color: #4d3524;
+      border: 1px solid #e0e0e0; /* Light border */
+    }
+
+    .buttons button.secondary:hover {
+      background-color: #e0e0e0; /* Darker grey on hover */
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .left-section, .right-section {
+        width: 100%;
+      }
+
+      .left-section {
+        padding: 20px;
+      }
+
+      .right-section {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Container -->
+  <div class="container">
+    <!-- Left Section -->
+    <div class="left-section">
+      <h2>Ok, let's compare calendars</h2>
+      <p>Do any of these work for you?</p>
+
+
+    <!-- Right Section -->
+    <div class="right-section">
+      <h2>Schedule Appointment</h2>
+      <p>Select a date and time that works for you.</p>
+      
+      <!-- Calendar -->
+      <div class="calendar">
+            <h3>January 2025</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Sun</th>
+                  <th>Mon</th>
+                  <th>Tue</th>
+                  <th>Wed</th>
+                  <th>Thu</th>
+                  <th>Fri</th>
+                  <th>Sat</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>1</td>
+                  <td>2</td>
+                  <td>3</td>
+                  <td>4</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>6</td>
+                  <td class="selected">7</td> <!-- Selected date -->
+                  <td>8</td>
+                  <td>9</td>
+                  <td>10</td>
+                  <td>11</td>
+                </tr>
+                <tr>
+                  <td>12</td>
+                  <td>13</td>
+                  <td>14</td>
+                  <td>15</td>
+                  <td>16</td>
+                  <td>17</td>
+                  <td>18</td>
+                </tr>
+                <tr>
+                  <td>19</td>
+                  <td>20</td>
+                  <td>21</td>
+                  <td>22</td>
+                  <td>23</td>
+                  <td>24</td>
+                  <td>25</td>
+                </tr>
+                <tr>
+                  <td>26</td>
+                  <td>27</td>
+                  <td>28</td>
+                  <td>29</td>
+                  <td>30</td>
+                  <td>31</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="time">12:00pm</p>
+          </div>
+        </div>
+
+      <!-- Buttons -->
+      <div class="buttons">
+        <button class="primary">Yes, Let's Schedule It!</button>
+        <button class="secondary">Show Me Other Options</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
