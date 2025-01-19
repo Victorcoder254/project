@@ -112,3 +112,29 @@ class Service(models.Model):
 
 
 #END OF ONBOARDING MODELS ############################################################################################################
+
+
+#APPOINTMENT MODELS############################################################################################################
+
+#Appointment model
+
+class Appointment(models.Model):
+    business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name="appointments")
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name="appointments")
+
+    # Customer details
+    customer_first_name = models.CharField(max_length=255, blank=True, null=True)
+    customer_last_name = models.CharField(max_length=255, blank=True, null=True)
+    customer_email = models.EmailField(blank=True, null=True)
+    customer_phone_number = models.CharField(max_length=15, blank=True, null=True)
+    customer_gender = models.CharField(max_length=10, blank=True, null=True)
+    customer_date_of_birth = models.DateField(blank=True, null=True)
+
+    #end of customer details
+    appointment_date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.service.name} - {self.business.name} on {self.appointment_date} at {self.start_time}"

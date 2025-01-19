@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{business.name}} - Appointment</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #d5c2aa; /* Beige background */
+    }
+
+    /* Left Section Styling */
+    .left-section {
+      background-color: #c3a682; /* Beige tone */
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      height: 100vh;
+    }
+
+    .left-section h1 {
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .left-section p {
+      font-size: 16px;
+    }
+
+    /* Right Section Styling */
+    .right-section {
+      background-color: #fff;
+      padding: 30px;
+      height: 100vh;
+      overflow-y: hidden; /* To avoid unwanted scrolling */
+    }
+
+    .scrollable-container {
+      height: calc(80vh - 120px); /* Reduced height to ensure scrolling within the container */
+      overflow-y: auto; /* Enable vertical scrolling */
+      overflow-x: hidden; /* Disable horizontal scrolling */
+      padding: 10px;
+      background-color: #f5f5f5; /* Greyish background for the scrollable container */
+      border-radius: 12px; /* Optional: Add rounded corners for better aesthetics */
+    }
+
+    .right-section h2, .right-section p {
+      text-align: center;
+    }
+
+    .right-section h2 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #4d3524;
+      margin-bottom: 10px;
+    }
+
+    .right-section p {
+      font-size: 14px;
+      color: gray;
+      margin-bottom: 20px;
+    }
+
+    /* Appointment Cards */
+    .appointment-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 25px; /* Increased padding for taller cards */
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 15px;
+      width: 90%; /* Reduced width of the cards */
+      max-width: 300px; /* Added max-width to prevent cards from becoming too wide */
+      height: 150px; /* Increased height of the cards */
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Center content vertically */
+      margin-left: auto;
+      margin-right: auto; /* Center cards horizontally */
+      background-color: #fff; /* White background for cards */
+      text-decoration: none; /* Remove underline from links */
+      color: inherit; /* Inherit text color */
+      cursor: pointer; /* Change cursor to pointer on hover */
+    }
+
+    .appointment-card:hover {
+      background-color: #f0f0f0; /* Light grey background on hover */
+    }
+
+    .appointment-card h5 {
+      font-size: 16px;
+      font-weight: bold;
+      color: #4d3524;
+      margin-bottom: 10px;
+    }
+
+    .appointment-card p {
+      font-size: 14px;
+      color: gray;
+      margin-bottom: 0;
+    }
+
+    /* Responsive Grid */
+    .scrollable-container .row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* 2 columns on large screens */
+      gap: 10px; /* Reduced gap between cards */
+    }
+
+    @media (max-width: 768px) {
+      .left-section {
+        height: auto;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .right-section {
+        height: auto;
+        padding: 20px;
+      }
+
+      .scrollable-container .row {
+        grid-template-columns: 1fr; /* 1 column on small screens */
+      }
+
+      .appointment-card {
+        width: 90%; /* Adjusted width for small screens */
+        height: 120px; /* Slightly reduced height for small screens */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Left Section -->
+      <div class="col-lg-4 left-section" style="text-align: center;">
+        <div>
+          <h1>DB</h1>
+          <p>{{business.name}}</p>
+        </div>
+      </div>
+
+      <!-- Right Section -->
+      <div class="col-lg-8 right-section">
+        <h2>We're looking forward to meeting you!</h2>
+        <p>Please choose an appointment type.</p>
+        <!-- Scrollable Container -->
+        <div class="scrollable-container">
+          <div class="row">
+            <!-- Appointment Cards as Links -->
+            {% for service in services %}
+            <a href="{% url 'choose_appointment_date' business.pk service.pk %}" class="appointment-card">
+              <h5>{{ service.name }}</h5>
+              <span>{{ service.description }}</span>
+              <p>{{ service.duration }}</p>
+              {% if service.price %}
+              <p>Price: ${{ service.price }}</p>
+              {% else %}
+              <p>Contact us for pricing</p>
+              {% endif %}
+            </a>
+            {% empty %}
+            <p>No services are available for this business at the moment.</p>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>

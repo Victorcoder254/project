@@ -34,3 +34,11 @@ class ServicesAdmin(admin.ModelAdmin):
 
 admin.site.register(Service, ServicesAdmin)
 
+
+# appointment
+
+class AppointmentAdmin(admin.ModelAdmin):
+    list_display = ("business",)
+
+admin.site.register(Appointment, AppointmentAdmin)   
+
